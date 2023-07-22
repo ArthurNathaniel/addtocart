@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shopping Cart Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .product {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin: 10px;
+      width: 200px;
+    }
+
+    .product h2 {
+      margin-top: 0;
+    }
+
+    .add-to-cart-btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .add-to-cart-btn:hover {
+      background-color: #45a049;
+    }
+
+    #cart {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      width: 300px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Product Listing</h1>
+  <div class="products">
+    <div class="product">
+      <h2>Product 1</h2>
+      <p>Price: $10.00</p>
+      <button class="add-to-cart-btn" onclick="addToCart('Product 1', 10.00)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <h2>Product 2</h2>
+      <p>Price: $15.00</p>
+      <button class="add-to-cart-btn" onclick="addToCart('Product 2', 15.00)">Add to Cart</button>
+    </div>
+    <!-- Add more products here -->
+  </div>
+
+  <h1>Shopping Cart</h1>
+  <div id="cart">
+    <p>No items in the cart.</p>
+    <p>Total Price: $0.00</p>
+  </div>
+
+ <script>
+    // Array to store cart items
+    let cartItems = [];
+
+    // Function to add product to the cart
+    function addToCart(productName, price) {
+        const item = { productName, price };
+        cartItems.push(item);
+        updateCartSummary();
+    }
+
+    // Function to update the cart summary
+    function updateCartSummary() {
+        const cartDiv = document.getElementById("cart");
+        cartDiv.innerHTML = ""; // Clear existing content
+
+        if (cartItems.length === 0) {
+            cartDiv.innerHTML = "<p>No items in the cart.</p>";
+            return;
+        }
+
+        const cartList = document.createElement("ul");
+        let totalPrice = 0;
+
+        cartItems.forEach(item => {
+            const listItem = document.createElement("li");
+            listItem.textContent = `${item.productName} - $${item.price.toFixed(2)}`;
+            cartList.appendChild(listItem);
+
+            totalPrice += item.price;
+        });
+
+        cartDiv.appendChild(cartList);
+
+        const totalParagraph = document.createElement("p");
+        totalParagraph.textContent = `Total Price: $${totalPrice.toFixed(2)}`;
+        cartDiv.appendChild(totalParagraph);
+    }
+</script>
+</body>
+</html>
